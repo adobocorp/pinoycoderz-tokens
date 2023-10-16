@@ -18,7 +18,13 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
-      # Runs a single command using the runners shell
+      - name: Creates github app token
+        uses: actions/create-github-app-token@v1
+        id: app-token
+        with:
+          app-id: ${{ vars.PINOY_CODERZ_GITHUB_ACTIONS_APP_ID }}
+          private-key: ${{ secrets.PINOY_CODERZ_GITHUB_ACTIONS_PRIVATE_KEY }}
+          owner: ${{ github.repository_owner }}
       - name: Set bot user
         run: |
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -31,5 +37,5 @@ jobs:
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ steps.app-token.outputs.token }}
           branch: ${{ github.ref }}
