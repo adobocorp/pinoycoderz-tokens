@@ -35,7 +35,7 @@ jobs:
       - name: pull from @adobocorp/pinoy-coderz-style-dictionary
         run: |
           git fetch https://github.com/adobocorp/pinoy-coderz-style-dictionary
-          git checkout FETCH_HEAD -- build/scss/_variables.scss
+          git checkout FETCH_HEAD -- build
           git commit -a -m "Add changes"
       - name: Push changes
         uses: ad-m/github-push-action@master
